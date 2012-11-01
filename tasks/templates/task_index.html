@@ -1,0 +1,67 @@
+{% extends 'task_base.html' %}
+
+
+{% block content %}
+
+
+{% if task_list %}
+
+    
+{% for task in task_list %}
+    <div class='row-fluid'>
+       <div class='span12'>
+       Test
+       <div class='row-fluid show-grid'>
+        <div style='height: 10px;' class='span3 progress probar' id='probar' data-animation="true" data-placement="bottom" data-trigger="hover" data-title='Progress Breakdown' 
+        data-content="Total Complete: {{ task.percent_complete }}% <br/>Progress: {{ task.percent_updated }}% <br/>To go: {{ task.percent_left }}%<br/>Last Update: {{ task.percent_update_date }}">
+            <div class='bar bar-success' style='width: 0%'; data-percentage='{{ task.previous_percent_complete }}'></div>
+            <div class='bar bar-info' data-placement="bottom" data-trigger="hover" data-title='{{ task.percent_updated }}% Progress'
+             style='width: 0%'; data-content="" data-percentage='{{ task.percent_updated }}'></div>
+        </div>  
+	    <div class='span5 pull-right task'><h5>{{ task.task }}</h5></div>
+	    
+        </div>
+        <div id="task-note-{{ task.id }}" class="collapse in">{{ task.notes }}</div>
+       </div>
+       
+	 </div>
+
+{% endfor %}
+
+{% else %}
+    <div class='well alert alert-info'>You curently have no Tasks.</div>
+{% endif %}
+{% endblock %}
+{% block script %}
+$('.probar').popover({html: true})
+$('#updated').popover({html: true})
+$(document).ready(function(){
+
+setTimeout(function(){
+
+    $('.progress .bar').each(function() {
+        var me = $(this);
+        var perc = me.attr("data-percentage");
+
+        //TODO: left and right text handling
+
+        var current_perc = 0;
+
+        var progress = setInterval(function() {
+            if (current_perc>=perc) {
+                clearInterval(progress);
+            } else {
+                current_perc +=2;
+                me.css('width', (current_perc)+'%');
+            }
+
+            //me.text((current_perc)+'%');
+
+        }, 1);
+
+    });
+
+}, 0);
+
+});
+{% endblock %}

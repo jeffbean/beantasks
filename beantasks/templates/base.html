@@ -1,0 +1,121 @@
+{% load static %}
+{% load url from future %}
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" charset="utf-8" type="text/css" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+  <title>Bean Tasks</title>
+<style type="text/css">  
+.container-fluid {
+margin-top: 1.5em;
+
+margin-left: auto;
+margin-right: auto;
+}
+
+.task {
+    text-align: right;
+}
+
+</style>  
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">  
+      <div class="navbar-inner">  
+        <div class="container">  
+        {% block navcontainer %}
+        <!--navigation does here--> 
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->  
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">  
+            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span>  
+            <span class="icon-bar"></span>  
+          </a>  
+          <!-- Be sure to leave the brand out there if you want it shown -->  
+          <a class="brand" href="{% url 'home' %}">Bean Tasks</a>  
+          <!-- Everything you want hidden at 940px or less, place within here -->  
+          <div class="nav-collapse">  
+            <!-- .nav, .navbar-search, .navbar-form, etc -->  
+          </div>  
+        <ul class="nav">   
+          <li><a href="{% url 'tasks:taskshome' %}">Tasks</a></li> 
+          <li><a href="{% url 'about' %}">About</a></li> 
+        </ul>   
+        <div class='pull-right'>
+        <form class="navbar-search span3"  _lpchecked="1">  
+            <input type="text" class="search-query" placeholder='Search...'>  
+            
+        </form> 
+        <ul class="nav pull-right">
+        {% if user.is_authenticated %}
+            <div class="btn-group">
+			    <a class="btn btn-success" href="{% url 'user_home' %}"><i class="icon-user icon-white"></i> {{ user.username }}</a>
+			    <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+			    <ul class="dropdown-menu">
+			    <li><a href="#"><i class="icon-pencil"></i> Chan</a></li>
+			    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+			    <li><a href="{% url 'change_passwd' %}"><i class="icon-leaf"></i> Change Password</a></li>
+			    {% if user.is_staff or user.is_superuser %}
+			    <li class="divider"></li>
+			    <li><a href="/admin/"><i class="icon-circle-arrow-up"></i> Admin</a></li>
+			    {% endif %}
+			    <li class="divider"></li>
+			    <li><a href="{% url 'bean_logout' %}"><i class="icon-eject"></i> Logout</a></li>
+			    </ul>
+		    </div>
+        {% else %}
+            <div class="btn-group">
+                <a class="btn btn-primary" href="{% url 'django.contrib.auth.views.login' %}"><i class="icon-user icon-white"></i> Login</a>
+            </div>
+        {% endif %}
+         </ul>
+        </div>
+        {% endblock %}
+        </div>  
+      </div>  
+    </div> 
+    <div class='container-fluid' style='margin-top: 70px;'>
+      <div class='row-fluid'>
+        <div class="span2">
+	        {% block sidebar %}
+	        <ul>
+	           <li>Test Sidebar</li>
+	        </ul>
+	        {% endblock %}
+        </div>
+        <div class="span8">
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+      </div>
+    </div>
+    <!-- <footer>
+        {% block footer %}
+        <a href="http://www.w3.org/html/logo/">
+        <img class="fr" src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" width="75" height="29" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics" />
+        </a>
+        {% endblock %}
+    </footer>
+    -->
+</div>
+<!--
+<div class="navbar navbar-fixed-bottom">  
+  <div class="navbar-inner">  
+    <div class="container">  
+
+    </div><!-- end container div --
+  </div><!-- end navbar-inner div --
+</div><!-- end navbar navbar-fixed-bottom div -->
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script>
+    {% block script %}
+    {% endblock %}
+    </script>
+</body>
+</html>

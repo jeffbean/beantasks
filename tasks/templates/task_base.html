@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load url from future %}
+
+{% block sidebar %}
+<ul class='nav nav-list bs-docs-sidenav affix'>
+ <li><a href="{% url 'admin:tasks_task_add' %}"><i class='icon-plus-sign'></i> Add Task</a></li>
+ 
+</ul>
+{% endblock %}

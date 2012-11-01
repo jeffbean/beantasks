@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load url from future %}
+{% block sidebar %}
+
+{% endblock %}
+
+{% block content %}
+<h1>{{ user.username }}</h1>
+<h3>Personal Information</h3>
+<dl class="dl-horizontal">
+    <dt>Username: </dt>
+    <dd>{{ user.username }}</dd>
+    <dt>Full Name:</dt>
+    {% if user.first_name or user.last_name %}
+        <dd>{{ user.get_full_name }}</dd>
+    {% else %}
+        <dd>None</dd>
+    {% endif %}
+    <dt>EMail:</dt>
+    {% if user.email %}
+        <dd>{{ user.email }}</dd>
+    {% else %}
+        <dd>No EMail</dd>
+    {% endif %}
+</dl>
+<h3>Permissions</h3>
+<dl class="dl-horizontal">
+    <dt>Admin Login: </dt>
+    <dd>{{ user.is_staff }}</dd>
+    <dt>Super User:</dt>
+    <dd>{{ user.is_superuser }}</dd>
+</dl>
+{% if user.groups %}
+<h4>Groups Permissions:</h4>
+<ul>
+    {% for group in user.get_group_permissions %}
+        <li>{{ group }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

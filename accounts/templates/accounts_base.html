@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block sidebar %}
+<ul class='nav nav-list bs-docs-sidenav affix'>
+ <li><a href="{% url 'accounts.views.NewUserRegistration' %}"><i class='icon-plus-sign'></i> New User</a></li>
+ <li><a href="{% url 'reset_passwd' %}"><i class='icon-refresh'></i> Reset Password</a></li>
+</ul>
+{% endblock %}

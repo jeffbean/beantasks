@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block sidebar %}
+<ul class='nav nav-list bs-docs-sidenav affix'>
+ <li><a href="{% url 'accounts.views.NewUserRegistration' %}"><i class='icon-plus-sign'></i> New User</a></li>
+ <li><a href="{% url 'reset_passwd' %}"><i class='icon-refresh'></i> Reset Password</a></li>
+</ul>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class='row-fluid'>
+<form class="well span7 form-inline " method="post" action="{% url 'django.contrib.auth.views.login' %}">
+
+{% csrf_token %}
+	{{ form.username }}
+    {{ form.password }}
+    <button type="submit" class="btn fluid" tabindex=3>Sign in</button>
+	<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+</div>
+{% if form.errors %}
+<div class='row'>
+    <div class='well alert alert-error span5 offset1'>Your username and password didn't match. Please try again.</div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block script %}
+$(document).ready(function() {
+    $("#id_username").attr("placeholder","Username");
+    $("#id_username").attr("tabindex","1");
+    $("#id_password").attr("placeholder","Password");
+    $("#id_password").attr("tabindex","2");
+});
+{% endblock %}

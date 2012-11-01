@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='row'>
+<form class="well form-horizontal span6" method="post" action=''>{% csrf_token %}
+{% if form.errors %}<div class'alert alert-error'>Please correct the following errors:<div>{% endif %}
+<div class="control-group {% if form.username.errors %}error{% endif %}">
+    <label class="control-label" for="username">Username:</label>
+    <div class="controls">
+       {{ form.username }}
+    </div>
+</div>
+<div class="control-group {% if form.email.errors %}error{% endif %}">
+    <label class="control-label" for="email">Email</label>
+    <div class="controls">
+       {{ form.email }}
+    </div>
+</div>
+<div class="control-group {% if form.password.errors %}error{% endif %}">
+    <label class="control-label" for="password">Password</label>
+    <div class="controls">
+       {{ form.password }}
+    </div>
+</div>
+<div class="control-group {% if form.password1.errors %}error{% endif %}">
+    <label class="control-label" for="password1">Verify Password</label>
+    <div class="controls">
+       {{ form.password1 }}
+    </div>
+</div>
+<div class="control-group">
+    <div class="controls">
+        <button type="submit" class="btn fluid" tabindex=5>Register</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+</div>
+</form>
+</div>
+{% endblock %}
+
+{% block script %}
+$(document).ready(function() {
+    $("#id_username").attr("placeholder","...");
+    $("#id_username").attr("tabindex","1");
+    $("#id_username").focus();
+    $("#id_email").attr("tabindex","2");
+    $("#id_password").attr("tabindex","3");
+    $("#id_password1").attr("tabindex","4");
+    });
+{% endblock %}
